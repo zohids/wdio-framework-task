@@ -24,6 +24,17 @@ export const config = {
     specs: [
         'test/spec/calculator.spec.js'
     ],
+
+    suites: {
+        smoke: [
+            './test/spec/calculator-hardcore.spec.js'
+        ],
+        others: [
+            './test/spec/calculator.spec.js',
+            './test/spec/calculator-hardcore.spec.js'
+        ]
+
+    },
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'

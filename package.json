@@ -10,8 +10,6 @@
     "wdio-chromedriver-service": "^8.1.1"
   },
   "scripts": {
-    "test": "npx wdio wdio.conf.js",
-    "other": "npm run test -- --spec ./test/spec/calculator.spec.js",
-    "smoke": "npm run test -- --spec ./test/spec/calculator.spec.js --mochaOpts.grep Hardcore"
+    "test": "npx wdio wdio.conf.js"
   }
 }
