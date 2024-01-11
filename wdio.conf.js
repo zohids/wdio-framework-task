@@ -62,11 +62,8 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome',
-        'goog:chromeOptions': {
-            binary: '/usr/bin/google-chrome-stable',
-            //args: ['--headless', '--disable-gpu'],
-        }
+        browserName: process.env.BROWSER || 'chrome',
+     
     }],
 
     //

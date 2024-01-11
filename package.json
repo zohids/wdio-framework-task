@@ -11,5 +11,8 @@
   },
   "scripts": {
     "test": "npx wdio wdio.conf.js"
+  },
+  "dependencies": {
+    "geckodriver": "^4.3.0"
   }
 }
