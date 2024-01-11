@@ -62,7 +62,7 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: process.env.BROWSER || 'firefox',
+        browserName: process.env.BROWSER,
      
     }],
 
