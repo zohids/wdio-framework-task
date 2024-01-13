@@ -4,29 +4,24 @@ import Calculator from "../page/calculator.page.js";
 import CalculatorLegacy from "../page/calculator-legacy.page.js"
 import TempEmail from "../page/temporary-email.page.js";
 import { Key } from 'webdriverio'
+import TestData from "./test-data.js"
 
 describe('Hardcore', () => {
     it("Hardcore", async () => {
-        await browser.maximizeWindow();
         await HomePage.open()
         await HomePage.searchBtn.click();
-        await HomePage.searchField.setValue("Google Cloud Platform Pricing Calculator")
-        await browser.keys("Enter")
+        await HomePage.searchField.setValue(TestData.searchInput)
+        await HomePage.pressingEnter();
         
         await SearchResultPage.calculatorLink.click()
 
         await Calculator.addToEstimateBtn[1].click()
         await Calculator.legacyVersionLink.click()
 
-        await browser.closeWindow()
-
-        await browser.switchWindow('https://cloud.google.com/products/calculator-legacy')
-
-        await browser.switchToFrame(await CalculatorLegacy.pricingFrameOuter)
-        await browser.switchToFrame(await CalculatorLegacy.pricingFrameInner)
+        await Calculator.switchingTab()
 
         await CalculatorLegacy.computeEngineBtn.click()
-        await CalculatorLegacy.numberOfInstancesInput.setValue(4)
+        await CalculatorLegacy.numberOfInstancesInput.setValue(TestData.numberOfInstances)
         await CalculatorLegacy.operatingSystemDrpdwn.click()
         await CalculatorLegacy.freeOs.click()
         await CalculatorLegacy.provisioningModelDrpdwn.click()
@@ -48,30 +43,22 @@ describe('Hardcore', () => {
         await CalculatorLegacy.oneYearOpt.click()
         await CalculatorLegacy.addToEstimateBtn.click()
 
-        let title = await browser.getUrl()
-
-        await browser.newWindow(TempEmail.tempEmailUrl)
-        await browser.pause(3000)
-        
+        await CalculatorLegacy.openingNewTab()
+   
         await TempEmail.copyBtn.click()
         
-
-        await browser.switchWindow(title)
-        await browser.switchToFrame(await CalculatorLegacy.pricingFrameOuter)
-        await browser.switchToFrame(await CalculatorLegacy.pricingFrameInner)
+        await CalculatorLegacy.switchingBack()
 
         await CalculatorLegacy.emailBtn.click()
         await CalculatorLegacy.emailInput.click()
-
-        await browser.keys([Key.Ctrl, 'v'])
-        await browser.pause(3000)
+        await CalculatorLegacy.pasting()
 
         await CalculatorLegacy.sendEmailBtn.click()
 
-        await browser.switchWindow(TempEmail.tempEmailUrl)
+        await CalculatorLegacy.switchingToTempEmail()
 
-        await TempEmail.receivedEmail.waitForDisplayed(30000)
+        await TempEmail.receivedEmail.waitForDisplayed()
         await TempEmail.receivedEmail.click()
-        expect(CalculatorLegacy.manualCalculation()).toEqual(TempEmail.comparison())
+        expect(CalculatorLegacy.manualCalculation()).toEqual(TestData.comparison())
     })
 });

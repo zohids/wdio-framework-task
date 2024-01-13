@@ -1,5 +1,6 @@
 import BasePage from "./base.page.js";
 import TempEmail from "./temporary-email.page.js";
+import { Key } from 'webdriverio'
 
 class CalculatorLegacy extends BasePage {
     get pricingFrameOuter() {
@@ -168,6 +169,15 @@ class CalculatorLegacy extends BasePage {
     getTotal(){
         return this.total
     }
+    async openingNewTab() {
+        await browser.newWindow(TempEmail.tempEmailUrl)
+    }
+    async switchingBack(){
+        
+        await browser.switchWindow("https://cloud.google.com/products/calculator-legacy")
+        await browser.switchToFrame(await this.pricingFrameOuter)
+        await browser.switchToFrame(await this.pricingFrameInner)
+    }
     //Emailing
     get emailBtn() {
         return $('//button[@title="Email Estimate"]')
@@ -175,10 +185,15 @@ class CalculatorLegacy extends BasePage {
     get emailInput() {
         return $('//input[@type="email"]')
     }
+    async pasting() {
+        await browser.keys([Key.Ctrl, 'v'])
+    }
     get sendEmailBtn() {
         return $('//button[contains(text(),"Email")]')
     }
-
+    async switchingToTempEmail() {
+        await browser.switchWindow(TempEmail.tempEmailUrl)
+    }
 
 
 }

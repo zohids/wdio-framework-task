@@ -13,6 +13,12 @@ class HomePage extends BasePage {
     get searchField() {
         return $ ('//input[@type="text"]')
     }
+    
+    async pressingEnter() {
+        await browser.keys("Enter")
+    }
+
+
 }
 
 export default new HomePage

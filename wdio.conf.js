@@ -30,8 +30,7 @@ export const config = {
             './test/spec/calculator-hardcore.spec.js'
         ],
         others: [
-            './test/spec/calculator.spec.js',
-            './test/spec/calculator-hardcore.spec.js'
+            './test/spec/calculator.spec.js'
         ]
 
     },
@@ -62,7 +61,8 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: process.env.BROWSER,
+        browserName: "chrome",
+
      
     }],
 
@@ -217,8 +217,9 @@ export const config = {
     /**
      * Function to be executed before a test (in Mocha/Jasmine) starts.
      */
-    // beforeTest: function (test, context) {
-    // },
+    beforeTest: function (test, context) {
+        browser.maximizeWindow();
+    },
     /**
      * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
      * beforeEach in Mocha)

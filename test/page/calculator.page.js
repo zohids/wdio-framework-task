@@ -1,8 +1,18 @@
 import BasePage from "./base.page.js";
+import TestData from '../spec/test-data.js';
+import CalculatorLegacy from './calculator-legacy.page.js';
 
 class Calculator extends BasePage {
     get addToEstimateBtn() {
         return $$('//button//descendant::span[text()="Add to estimate"]')
+    }
+    async switchingTab() {
+        await browser.closeWindow()
+        const tabs = await browser.getWindowHandles()
+        await browser.switchToWindow(tabs[0])
+        await CalculatorLegacy.pricingFrameOuter.waitForDisplayed()
+        await browser.switchToFrame(await CalculatorLegacy.pricingFrameOuter)
+        await browser.switchToFrame(await CalculatorLegacy.pricingFrameInner)
     }
     get computeEngineBtn() {
         return $('//h2[text()="Compute Engine"]')
@@ -96,13 +106,8 @@ class Calculator extends BasePage {
         return $('//div[contains(text(), "discount opt")]//following-sibling::div[@class="EWphe HY0Uh"]')
     }
     //Manual Calculation
-    async totalCost() {
-        let totalCost = $('//div[text()="Compute"]//following-sibling::label[contains(text(), "$")]')
-        let totalCostTxt = await totalCost.getText()
-        let priceNum = parseFloat(totalCostTxt.slice(1).replace(",", ""))
-        return priceNum
-    }
-    async totalCalculation() {
+
+    async totalCalculationInUI() {
         let machineCost = $('//div[text()="Machine type"]//parent::div//following-sibling::div[contains(text(), "$")]')
         let gpuCost = $('//div[text()="Number of GPUs"]//parent::div//following-sibling::div[contains(text(), "$")]')
         let ssdCost = $('//div[text()="Local SSD"]//parent::div//following-sibling::div[contains(text(), "$")]')

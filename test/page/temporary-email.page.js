@@ -18,10 +18,7 @@ class TempEmail extends BasePage{
         let totalCost = $('//td/h3[contains(text(), "USD")]')
         let totalCostText = await totalCost.getText()
         let totalCostInNumbers = parseFloat(totalCostText.slice(4).replace(",", ""))
-        // console.log(totalCostInNumbers);
-        // console.log(CalculatorLegacy.getTotal);
-        return totalCostInNumbers
-        
+        return totalCostInNumbers 
     }
 
 }

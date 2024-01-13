@@ -2,14 +2,14 @@ import HomePage from "../page/home.page.js";
 import SearchResultPage from "../page/search-result.page.js"
 import Calculator from "../page/calculator.page.js";
 import CalculatorLegacy from "../page/calculator-legacy.page.js"
+import TestData from "./test-data.js"
 
 describe("Navigating to Calculator", () => {
-    it("Hurt_Me_Plenty", async () => {
-        await browser.maximizeWindow();
+    it("Hurt Me Plenty", async () => {
         await HomePage.open()
         await HomePage.searchBtn.click();
-        await HomePage.searchField.setValue("Google Cloud Platform Pricing Calculator")
-        await browser.keys("Enter")
+        await HomePage.searchField.setValue(TestData.searchInput)
+        await HomePage.pressingEnter();
         
         await SearchResultPage.calculatorLink.click()
 
@@ -18,15 +18,10 @@ describe("Navigating to Calculator", () => {
         if (await Calculator.legacyVersionLink.isExisting()) {
             await Calculator.legacyVersionLink.click()
 
-            await browser.closeWindow()
-            
-            await browser.switchWindow('https://cloud.google.com/products/calculator-legacy')
-
-            await browser.switchToFrame(await CalculatorLegacy.pricingFrameOuter)
-            await browser.switchToFrame(await CalculatorLegacy.pricingFrameInner)
+            await Calculator.switchingTab()
 
             await CalculatorLegacy.computeEngineBtn.click()
-            await CalculatorLegacy.numberOfInstancesInput.setValue(4)
+            await CalculatorLegacy.numberOfInstancesInput.setValue(TestData.numberOfInstances)
             await CalculatorLegacy.operatingSystemDrpdwn.click()
             await CalculatorLegacy.freeOs.click()
             await CalculatorLegacy.provisioningModelDrpdwn.click()
@@ -73,7 +68,7 @@ describe("Navigating to Calculator", () => {
         else{
             await Calculator.computeEngineBtn.click()
             await Calculator.advancedSettingsSwitch.click()
-            await Calculator.numberOfInstancesInput.setValue(4)
+            await Calculator.numberOfInstancesInput.setValue(TestData.numberOfInstances)
             await Calculator.operatingSystemDropdown.click()
             await Calculator.freeOs.click()
             await Calculator.regularBtn.click()
@@ -105,22 +100,23 @@ describe("Navigating to Calculator", () => {
     
             await switchToFrame(Calculator.iFrame)
             
-            if(expect(await Calculator.provisioningModelTxt.getText()).toEqual("Regular")){
+            if(expect(await Calculator.provisioningModelTxt.getText()).toEqual(TestData.verificationOfConfigs.model)){
                 console.log("Provisioning model: Regular");
             }     
-            if(expect(await Calculator.instanceTypeTxt.getText()).toEqual("n1-standard-8, vCPUs: 8, RAM: 30 GB")){
+            if(expect(await Calculator.instanceTypeTxt.getText()).toEqual(TestData.verificationOfConfigs.type)){
                 console.log("Instance Type: n1-standard-8, vCPUs: 8, RAM: 30 GB");
             }     
-            if(expect(await Calculator.regionTxt.getText()).toHaveTextContaining("europe")){
+            if(expect(await Calculator.regionTxt.getText()).toHaveTextContaining(TestData.verificationOfConfigs.region)){
                 console.log(`Region: Netherlands (europe-west4)`);
             }     
-            if(expect(await Calculator.chosenSsdTxt.getText()).toEqual("2x375 GB")){
+            if(expect(await Calculator.chosenSsdTxt.getText()).toEqual(TestData.verificationOfConfigs.ssd)){
                 console.log("Local SSD: 2x375GB");
             }     
-            if(expect(await Calculator.commitmentTermTxt.getText()).toEqual("1 year")){
+            if(expect(await Calculator.commitmentTermTxt.getText()).toEqual(TestData.verificationOfConfigs.term)){
                 console.log("Committed use discount options: 1 year");
             }
-            expect(Calculator.totalCost()).toEqual(Calculator.totalCalculation())
+
+            expect(Calculator.totalCalculationInUI()).toEqual(TestData.totalCost())
         
         }
     })
