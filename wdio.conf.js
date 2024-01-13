@@ -64,7 +64,7 @@ export const config = {
         {
             browserName: process.env.BROWSER || "chrome",
             'goog:chromeOptions': {
-                args: process.env.BROWSER === "chrome" ? ['--headless', '--disable-gpu'] : []       
+                headless: false
             },
         },
         {
