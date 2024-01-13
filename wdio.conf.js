@@ -64,14 +64,14 @@ export const config = {
         {
             browserName: process.env.BROWSER || "chrome",
             'goog:chromeOptions': {
-                headless: false
+                args: process.env.BROWSER === "chrome" ? ['headless=false'] : []       
             },
         },
         {
             browserName: process.env.BROWSER || "firefox",
-            // 'moz:firefoxOptions': {
-            //   args: process.env.BROWSER === "firefox" ? ['-headless'] : []
-            // },
+            'moz:firefoxOptions': {
+              args: process.env.BROWSER === "firefox" ? ['-headless=false'] : []
+            },
           },    
 
     ],
