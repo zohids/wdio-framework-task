@@ -60,9 +60,19 @@ export const config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        browserName: process.env.BROWSER || "chrome",   
-    },
+    capabilities: [
+        {
+            browserName: process.env.BROWSER || "chrome",
+            'goog:chromeOptions': {
+                args: process.env.BROWSER === "chrome" ? ['--headless', '--disable-gpu'] : []       
+            },
+        },
+        {
+            browserName: process.env.BROWSER || "firefox",
+            'moz:firefoxOptions': {
+              args: process.env.BROWSER === "firefox" ? ['-headless'] : []
+            },
+          },    
 
     ],
 
