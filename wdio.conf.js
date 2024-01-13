@@ -69,9 +69,9 @@ export const config = {
         },
         {
             browserName: process.env.BROWSER || "firefox",
-            'moz:firefoxOptions': {
-              args: process.env.BROWSER === "firefox" ? ['-headless'] : []
-            },
+            // 'moz:firefoxOptions': {
+            //   args: process.env.BROWSER === "firefox" ? ['-headless'] : []
+            // },
           },    
 
     ],
